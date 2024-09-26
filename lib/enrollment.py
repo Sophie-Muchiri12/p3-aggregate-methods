@@ -12,8 +12,19 @@ class Student:
         else:
             raise TypeError("course must be an instance of Course")
 
+    def course_count(self):
+    return len(self._enrollments)
+
     def get_enrollments(self):
         return self._enrollments.copy()
+    
+    @classmethod
+    def aggregate_enrollments_per_day(cls):
+        enrollment_count = {}
+        for enrollment in cls.all:
+            date = enrollment.get_enrollment_date().date()
+            enrollment_count[date] = enrollment_count.get(date, 0) + 1
+        return enrollment_count
 
 class Course:
     def __init__(self, title):
